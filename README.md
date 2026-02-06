@@ -114,6 +114,9 @@ export default defineConfig({
 
 ---
 
-## 🤝 Contributing
+## 🤝 Proof of Work
 
-- Feel free to open issues or submit PRs to improve error handling, add tests, or enhance the dataset.
+<img width="1905" height="871" alt="Screenshot 2026-02-06 100139" src="https://github.com/user-attachments/assets/02dbac6f-d798-40e4-86e9-2e26fbc1b827" />
+<img width="1898" height="871" alt="Screenshot 2026-02-06 100225" src="https://github.com/user-attachments/assets/56fc8372-3592-4862-a2dc-6b921d635d0b" />
+<img width="1901" height="870" alt="Screenshot 2026-02-06 100240" src="https://github.com/user-attachments/assets/4d41901a-b136-48a2-be80-f82d4428107c" />
+<img width="1900" height="870" alt="Screenshot 2026-02-06 100155" src="https://github.com/user-attachments/assets/9ff5acac-3b33-49d4-8aa5-82cf45b4706c" />
