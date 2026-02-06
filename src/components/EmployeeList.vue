@@ -1,9 +1,9 @@
 <template>
-  <div>
+  <div :class="{ 'dark-mode': store.state.theme.isDark }">
     <!-- Header -->
     <div class="d-flex justify-content-between align-items-center mb-4">
       <div>
-        <h1 class="h2 fw-bold mb-2" style="color: #2d3748;">Employee Directory</h1>
+        <h1 class="h2 fw-bold mb-2 page-title">Employee Directory</h1>
         <p class="text-muted mb-0">Manage and view all employee information</p>
       </div>
       <div>
@@ -115,7 +115,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="employee in filteredEmployees" :key="employee.employeeId">
+              <tr v-for="employee in paginatedEmployees" :key="employee.employeeId">
                 <td class="fw-semibold text-muted">#{{ employee.employeeId }}</td>
                 <td>
                   <div class="d-flex align-items-center">
@@ -171,18 +171,18 @@
       <div class="card-footer bg-white border-top">
         <div class="d-flex justify-content-between align-items-center">
           <div class="text-muted small">
-            Showing {{ filteredEmployees.length }} of {{ totalEmployees }} employees
+            Showing {{ paginatedEmployees.length }} of {{ totalEmployees }} employees
           </div>
           <nav>
             <ul class="pagination pagination-sm mb-0">
-              <li class="page-item disabled">
-                <a class="page-link" href="#"><i class="bi bi-chevron-left"></i></a>
+              <li class="page-item" :class="{ disabled: currentPage === 1 }">
+                <a class="page-link" href="#" @click.prevent="previousPage"><i class="bi bi-chevron-left"></i></a>
               </li>
-              <li class="page-item active"><a class="page-link" href="#">1</a></li>
-              <li class="page-item"><a class="page-link" href="#">2</a></li>
-              <li class="page-item"><a class="page-link" href="#">3</a></li>
-              <li class="page-item">
-                <a class="page-link" href="#"><i class="bi bi-chevron-right"></i></a>
+              <li v-for="page in totalPages" :key="page" class="page-item" :class="{ active: currentPage === page }">
+                <a class="page-link" href="#" @click.prevent="goToPage(page)">{{ page }}</a>
+              </li>
+              <li class="page-item" :class="{ disabled: currentPage === totalPages }">
+                <a class="page-link" href="#" @click.prevent="nextPage"><i class="bi bi-chevron-right"></i></a>
               </li>
             </ul>
           </nav>
@@ -203,6 +203,7 @@ export default {
     const searchQuery = ref('')
     const selectedDept = ref('')
     const showAddForm = ref(false)
+    const currentPage = ref(1)
     const newEmployee = ref({ name: '', position: '', department: '', salary: 0, contact: '' })
 
     const departments = () => [...new Set(store.state.employees.map(e => e.department))]
@@ -239,6 +240,7 @@ export default {
       selectedDept,
       showAddForm,
       newEmployee,
+      currentPage,
       departments,
       addEmployee,
       viewDetails,
@@ -247,6 +249,7 @@ export default {
   },
   data() {
     return {
+      itemsPerPage: 3,
       departmentColors: {
         'Development': '#3498db',
         'HR': '#9b59b6',
@@ -299,11 +302,32 @@ export default {
       }
       
       return filtered
+    },
+    totalPages() {
+      return Math.ceil(this.filteredEmployees.length / this.itemsPerPage)
+    },
+    paginatedEmployees() {
+      const start = (this.currentPage - 1) * this.itemsPerPage
+      const end = start + this.itemsPerPage
+      return this.filteredEmployees.slice(start, end)
     }
   },
   methods: {
     getDepartmentColor(dept) {
       return this.departmentColors[dept] || '#7f8c8d'
+    },
+    nextPage() {
+      if (this.currentPage < this.totalPages) {
+        this.currentPage++
+      }
+    },
+    previousPage() {
+      if (this.currentPage > 1) {
+        this.currentPage--
+      }
+    },
+    goToPage(page) {
+      this.currentPage = page
     },
     extractYear(history) {
       const match = history && history.match(/\d{4}/)
@@ -319,14 +343,236 @@ export default {
 </script>
 
 <style scoped>
-.table th {
+:root {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8fafc;
+  --text-primary: #2d3748;
+  --text-secondary: #718096;
+  --border-color: #e2e8f0;
+}
+
+div.dark-mode {
+  --bg-primary: #1a1a2e;
+  --bg-secondary: #16213e;
+  --text-primary: #ecf0f1;
+  --text-secondary: #bdc3c7;
+  --border-color: #0f3460;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+.page-title {
+  color: var(--text-primary);
+  transition: color 0.3s ease;
+}
+
+.card {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  border-color: var(--border-color);
+}
+
+.card-header {
+  background-color: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-primary);
+}
+
+.card-footer {
+  background-color: var(--bg-secondary);
+  border-top: 1px solid var(--border-color);
+  color: var(--text-primary);
+}
+
+.table {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+.table thead {
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+  border-color: var(--border-color);
+}
+
+.table thead th {
   font-weight: 600;
-  color: #4a5568;
-  background-color: #f8fafc;
+  color: var(--text-primary);
+  background-color: var(--bg-secondary);
+  border-color: var(--border-color);
+  padding: 1rem;
+  transition: all 0.3s ease;
+}
+
+.table tbody {
+  background-color: var(--bg-primary);
+}
+
+.table tbody tr {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  border-bottom: 1px solid var(--border-color);
+  transition: background-color 0.2s ease;
+}
+
+.table tbody tr:nth-child(even) {
+  background-color: rgba(102, 126, 234, 0.02);
+}
+
+div.dark-mode .table tbody tr:nth-child(even) {
+  background-color: rgba(102, 126, 234, 0.08);
+}
+
+.table-hover tbody tr:hover {
+  background-color: rgba(102, 126, 234, 0.05);
+}
+
+div.dark-mode .table-hover tbody tr:hover {
+  background-color: rgba(102, 126, 234, 0.15);
+}
+
+.table td {
+  color: var(--text-primary);
+  border-color: var(--border-color);
+  background-color: var(--bg-primary);
+  padding: 0.875rem 1rem;
+  transition: all 0.3s ease;
+}
+
+.table tbody tr:hover td {
+  background-color: rgba(102, 126, 234, 0.05);
+}
+
+div.dark-mode .table tbody tr:hover td {
+  background-color: rgba(102, 126, 234, 0.1);
 }
 
 .badge {
-  font-weight: 500;
-  padding: 0.35rem 0.75rem;
+  font-weight: 600;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+}
+
+.btn-outline-primary {
+  color: #667eea;
+  border-color: #667eea;
+  background-color: transparent;
+}
+
+.btn-outline-primary:hover {
+  background-color: #667eea;
+  color: white;
+  border-color: #667eea;
+}
+
+.btn-outline-success {
+  color: #10b981;
+  border-color: #10b981;
+  background-color: transparent;
+}
+
+.btn-outline-success:hover {
+  background-color: #10b981;
+  color: white;
+  border-color: #10b981;
+}
+
+.btn-outline-info {
+  color: #3b82f6;
+  border-color: #3b82f6;
+  background-color: transparent;
+}
+
+.btn-outline-info:hover {
+  background-color: #3b82f6;
+  color: white;
+  border-color: #3b82f6;
+}
+
+.form-select, .form-control {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  border-color: var(--border-color);
+}
+
+.form-select:focus, .form-control:focus {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  border-color: #667eea;
+}
+
+.pagination {
+  background-color: transparent;
+}
+
+.page-link {
+  background-color: transparent;
+  color: var(--text-primary);
+  border-color: var(--border-color);
+}
+
+.page-link:hover {
+  background-color: rgba(102, 126, 234, 0.1);
+  color: var(--text-primary);
+  border-color: #667eea;
+}
+
+.page-item.active .page-link {
+  background-color: #667eea;
+  border-color: #667eea;
+  color: white;
+}
+
+.text-muted {
+  color: var(--text-secondary) !important;
+}
+
+div.dark-mode .text-muted {
+  color: #95a5a6 !important;
+}
+
+.text-primary {
+  color: #667eea !important;
+}
+
+div.dark-mode .text-primary {
+  color: #8b9ef6 !important;
+}
+
+.text-success {
+  color: #10b981 !important;
+}
+
+div.dark-mode .text-success {
+  color: #34d399 !important;
+}
+
+.text-info {
+  color: #3b82f6 !important;
+}
+
+div.dark-mode .text-info {
+  color: #60a5fa !important;
+}
+
+.text-warning {
+  color: #f59e0b !important;
+}
+
+div.dark-mode .text-warning {
+  color: #fbbf24 !important;
+}
+
+a {
+  color: #667eea;
+  transition: color 0.3s ease;
+}
+
+div.dark-mode a {
+  color: #8b9ef6;
+}
+
+div.dark-mode a:hover {
+  color: #a5b9ff;
 }
 </style>

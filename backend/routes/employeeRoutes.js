@@ -7,7 +7,7 @@ const router = express.Router();
    GET: Fetch all employees
    Endpoint: GET /api/employees
    ========================================================= */
-router.get("/api/employees", async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     // Step 1: Query the employees table
     const [employees] = await pool.execute(
@@ -64,7 +64,7 @@ router.patch("/:id", async (req, res) => {
    DELETE: Remove an employee
    Endpoint: DELETE /api/employees/:id
    ========================================================= */
-router.delete("/api/employees/:id", async (req, res) => {
+router.delete("/:id", async (req, res) => {
   try {
     // Step 1: Get employee ID from URL parameter
     const employeeId = req.params.id;

@@ -1,5 +1,5 @@
 <template>
-  <div class="login-page">
+  <div class="login-page" :class="{ 'dark-mode': store.state.theme.isDark }">
     <div class="login-panel">
       <div class="login-left">
         <div class="welcome">
@@ -12,7 +12,7 @@
       <div class="login-right">
         <div class="signin-box">
           <h4 class="mb-3">Sign in</h4>
-          <p class="small text-white-50 mb-3">Use the credentials provided by the instructor</p>
+          <p class="small login-hint mb-3">Use the credentials provided by the instructor</p>
 
           <div v-if="error" class="alert alert-danger small">{{ error }}</div>
 
@@ -40,7 +40,8 @@ export default {
     const username = ref('')
     const password = ref('')
     const router = useRouter()
-    const { state, login } = useStore()
+    const store = useStore()
+    const { state, login } = store
     const error = ref(null)
 
     const onSubmit = () => {
@@ -52,7 +53,7 @@ export default {
       }
     }
 
-    return { username, password, onSubmit, error }
+    return { username, password, onSubmit, error, store }
   }
 }
 </script>
@@ -65,6 +66,11 @@ export default {
   justify-content: center;
   padding: 3rem 1rem;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  transition: background 0.3s ease;
+}
+
+.login-page.dark-mode {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
 }
 
 .login-panel {
@@ -74,6 +80,11 @@ export default {
   border-radius: 14px;
   overflow: hidden;
   box-shadow: 0 10px 40px rgba(0,0,0,0.25);
+  transition: all 0.3s ease;
+}
+
+.login-page.dark-mode .login-panel {
+  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
 }
 
 .login-left {
@@ -83,6 +94,11 @@ export default {
   display: flex;
   align-items: center;
   background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.015) 100%);
+  transition: all 0.3s ease;
+}
+
+.login-page.dark-mode .login-left {
+  background: linear-gradient(135deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.2) 100%);
 }
 
 .welcome h1 {
@@ -107,11 +123,21 @@ export default {
   padding: 2.25rem;
   display: flex;
   align-items: center;
+  transition: all 0.3s ease;
+}
+
+.login-page.dark-mode .login-right {
+  background: rgba(0,0,0,0.3);
+  backdrop-filter: blur(6px);
 }
 
 .signin-box h4 {
   color: #fff;
   margin-bottom: 0.25rem;
+}
+
+.login-hint {
+  color: rgba(255,255,255,0.7);
 }
 
 .input-ghost {
@@ -120,10 +146,21 @@ export default {
   color: #fff;
   border-radius: 8px;
   padding: 0.75rem 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.login-page.dark-mode .input-ghost {
+  background: rgba(255,255,255,0.1);
 }
 
 .input-ghost::placeholder {
   color: rgba(255,255,255,0.6);
+}
+
+.input-ghost:focus {
+  background: rgba(255,255,255,0.15);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.3);
 }
 
 .btn-signin {
@@ -133,6 +170,12 @@ export default {
   padding: 0.625rem 1rem;
   border-radius: 8px;
   font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-signin:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
 }
 
 .alert {
@@ -141,9 +184,18 @@ export default {
 }
 
 @media (max-width: 768px) {
-  .login-panel { flex-direction: column; }
-  .login-right { width: 100%; }
-  .login-left { padding: 2rem; text-align: center; }
-  .welcome h1 { font-size: 2.25rem; }
+  .login-panel { 
+    flex-direction: column; 
+  }
+  .login-right { 
+    width: 100%; 
+  }
+  .login-left { 
+    padding: 2rem; 
+    text-align: center; 
+  }
+  .welcome h1 { 
+    font-size: 2.25rem; 
+  }
 }
 </style>

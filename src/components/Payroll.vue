@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div :class="{ 'dark-mode': store.state.theme.isDark }">
     <!-- Header -->
     <div class="mb-4">
       <div class="d-flex align-items-center mb-2">
@@ -7,7 +7,7 @@
           <i class="bi bi-cash-stack text-success fs-3"></i>
         </div>
         <div>
-          <h1 class="h2 mb-1 fw-bold" style="color: #2d3748;">Payroll Management</h1>
+          <h1 class="h2 mb-1 fw-bold page-title">Payroll Management</h1>
           <p class="text-muted mb-0">Process and manage employee salaries</p>
         </div>
       </div>
@@ -188,7 +188,7 @@
                 <i class="bi bi-cash-coin text-primary"></i>
               </div>
               <div>
-                <h6 class="mb-1">Total Payroll</h6>
+                <h6 class="mb-1 text-muted">Total Payroll</h6>
                 <h4 class="fw-bold mb-0">R {{ totalPayroll.toLocaleString() }}</h4>
               </div>
             </div>
@@ -199,7 +199,7 @@
                 <i class="bi bi-arrow-up-right text-success"></i>
               </div>
               <div>
-                <h6 class="mb-1">Average Salary</h6>
+                <h6 class="mb-1 text-muted">Average Salary</h6>
                 <h4 class="fw-bold mb-0">R {{ avgSalary.toLocaleString() }}</h4>
               </div>
             </div>
@@ -210,7 +210,7 @@
                 <i class="bi bi-clock text-info"></i>
               </div>
               <div>
-                <h6 class="mb-1">Avg. Hours/Employee</h6>
+                <h6 class="mb-1 text-muted">Avg. Hours/Employee</h6>
                 <h4 class="fw-bold mb-0">{{ avgHours }}h</h4>
               </div>
             </div>
@@ -406,12 +406,432 @@ export default {
 </script>
 
 <style scoped>
+:root {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8fafc;
+  --text-primary: #2d3748;
+  --text-secondary: #718096;
+  --border-color: #e2e8f0;
+}
+
+div.dark-mode {
+  --bg-primary: #1a1a2e;
+  --bg-secondary: #16213e;
+  --text-primary: #ecf0f1;
+  --text-secondary: #bdc3c7;
+  --border-color: #0f3460;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+.page-title {
+  color: var(--text-primary);
+  transition: color 0.3s ease;
+}
+
+.card {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  border-color: var(--border-color);
+  transition: all 0.3s ease;
+}
+
+.card-header {
+  background-color: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-primary);
+}
+
+.card-footer {
+  background-color: var(--bg-secondary);
+  border-top: 1px solid var(--border-color);
+  color: var(--text-primary);
+}
+
+.table {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+.table thead {
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+  border-color: var(--border-color);
+}
+
+div.dark-mode .table thead {
+  background-color: #0f3460;
+}
+
+.table thead th {
+  font-weight: 600;
+  color: var(--text-primary);
+  background-color: var(--bg-secondary);
+  border-color: var(--border-color);
+  padding: 1rem;
+  transition: all 0.3s ease;
+}
+
+div.dark-mode .table thead th {
+  background-color: #0f3460;
+  color: #ecf0f1;
+  border-color: #1a1a2e;
+}
+
+.table tbody {
+  background-color: var(--bg-primary);
+}
+
+.table tbody tr {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  border-bottom: 1px solid var(--border-color);
+  transition: background-color 0.2s ease;
+}
+
+.table tbody tr:nth-child(even) {
+  background-color: rgba(102, 126, 234, 0.02);
+}
+
+div.dark-mode .table tbody tr:nth-child(even) {
+  background-color: rgba(102, 126, 234, 0.08);
+}
+
+.table-hover tbody tr:hover {
+  background-color: rgba(102, 126, 234, 0.05);
+}
+
+div.dark-mode .table-hover tbody tr:hover {
+  background-color: rgba(102, 126, 234, 0.15);
+}
+
+.table td {
+  color: var(--text-primary);
+  border-color: var(--border-color);
+  background-color: var(--bg-primary);
+  padding: 0.875rem 1rem;
+  transition: all 0.3s ease;
+}
+
+.table tbody tr:hover td {
+  background-color: rgba(102, 126, 234, 0.05);
+}
+
+div.dark-mode .table tbody tr:hover td {
+  background-color: rgba(102, 126, 234, 0.1);
+}
+
+.text-muted {
+  color: var(--text-secondary) !important;
+}
+
+div.dark-mode .text-muted {
+  color: #95a5a6 !important;
+}
+
 .progress {
-  background-color: #e2e8f0;
+  background-color: var(--bg-secondary);
+  border-radius: 8px;
+  overflow: hidden;
+  height: 0.75rem;
+}
+
+.progress-bar {
+  background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+  transition: width 0.3s ease;
 }
 
 .badge {
+  font-weight: 600;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+}
+
+/* .badge.bg-success {
+  background-color: #10b981;
+  color: white;
+}
+
+.badge.bg-danger {
+  background-color: #ef4444 ;
+  color: white;
+} */
+
+.badge.bg-warning {
+  background-color: #f59e0b;
+  color: white;
+}
+
+.badge.bg-info {
+  background-color: #3b82f6;
+  color: white;
+}
+
+a {
+  color: #667eea;
+  transition: color 0.3s ease;
+}
+
+div.dark-mode a {
+  color: #8b9ef6;
+}
+
+div.dark-mode a:hover {
+  color: #a5b9ff;
+}
+
+.btn-sm {
+  padding: 0.4rem 0.8rem;
+  font-size: 0.875rem;
+  border-radius: 6px;
+}
+
+.btn {
+  border-radius: 6px;
   font-weight: 500;
-  padding: 0.35rem 0.75rem;
+  transition: all 0.3s ease;
+  border: none;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.btn-primary:hover {
+  color: white;
+  filter: brightness(1.1);
+}
+
+.btn-success {
+  background-color: #10b981;
+  color: white;
+}
+
+.btn-success:hover {
+  background-color: #059669;
+  color: white;
+}
+
+.btn-danger {
+  background-color: #ef4444;
+  color: white;
+}
+
+.btn-danger:hover {
+  background-color: #dc2626;
+  color: white;
+}
+
+.form-control, .form-select {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  border-color: var(--border-color);
+}
+
+.form-control:focus, .form-select:focus {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  border-color: #667eea;
+}
+
+.form-control::placeholder {
+  color: var(--text-secondary);
+}
+
+div.dark-mode .form-control, div.dark-mode .form-select {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  border-color: var(--border-color);
+}
+
+div.dark-mode .form-control:focus, div.dark-mode .form-select:focus {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  border-color: #667eea;
+}
+
+div.dark-mode .form-control::placeholder {
+  color: var(--text-secondary);
+}
+
+.modal-content {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  border-color: var(--border-color);
+}
+
+.modal-header, .modal-footer {
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+  border-color: var(--border-color);
+}
+
+.modal-body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  border-color: var(--border-color);
+}
+
+.modal-backdrop {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content, .modal-header, .modal-body, .modal-footer {
+  transition: all 0.3s ease;
+}
+
+.modal-content:hover, .modal-header:hover, .modal-body:hover, .modal-footer:hover {
+  filter: brightness(1.1);
+}
+
+div.dark-mode .modal-content, div.dark-mode .modal-header, div.dark-mode .modal-body, div.dark-mode .modal-footer {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  border-color: var(--border-color);
+}
+
+div.dark-mode .modal-content:hover, div.dark-mode .modal-header:hover, div.dark-mode .modal-body:hover, div.dark-mode .modal-footer:hover {
+  filter: brightness(1.1);
+}
+
+h4 {
+  color: var(--text-primary);
+  transition: all 0.3s ease;
+}
+
+div.dark-mode h4 {
+  color: var(--text-primary);
+}
+
+div.dark-mode h4:hover {
+  color: #8b9ef6;
+}
+
+p {
+  color: var(--text-secondary);
+}
+
+div.dark-mode p {
+  color: var(--text-secondary);
+}
+
+div.dark-mode p:hover {
+  color: #95a5a6;
+}
+
+.dark-mode {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+.dark-mode .card {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  border-color: var(--border-color) !important;
+  transition: all 0.3s ease;
+}
+
+.dark-mode .card-header {
+  background-color: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-color) !important;
+  color: var(--text-primary);
+}
+
+.dark-mode .card-footer {
+  background-color: var(--bg-secondary);
+  border-top: 1px solid var(--border-color) !important;
+  color: var(--text-primary);
+}
+
+.dark-mode .table thead {
+  background-color: #0f3460;
+}
+
+.dark-mode .table thead th {
+  background-color: #0f3460;
+  color: #ecf0f1;
+  border-color: #1a1a2e !important;
+}
+
+.dark-mode .table tbody tr:hover td {
+  background-color: rgba(102, 126, 234, 0.1);
+}
+
+.dark-mode .text-muted {
+  color: #95a5a6 !important;
+}
+
+.dark-mode .table td {
+  color: var(--text-primary);
+  border-color: var(--border-color);
+  background-color: var(--bg-primary);
+  padding: 0.875rem 1rem;
+  transition: all 0.3s ease;
+}
+
+.dark-mode .table-hover tbody tr:hover {
+  background-color: rgba(102, 126, 234, 0.15);
+}
+
+.dark-mode .table-hover tbody tr:hover td {
+  background-color: rgba(102, 126, 234, 0.15);
+}
+
+.dark-mode a {
+  color: #8b9ef6;
+}
+
+.dark-mode a:hover {
+  color: #a5b9ff;
+}
+
+.dark-mode .btn-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.dark-mode .btn-primary:hover {
+  color: white;
+  filter: brightness(1.1);
+}
+
+.dark-mode .btn-success {
+  background-color: #10b981;
+  color: white;
+}
+
+.dark-mode .btn-success:hover {
+  background-color: #059669;
+  color: white;
+}
+
+.dark-mode .btn-danger {
+  background-color: #ef4444;
+  color: white;
+}
+
+.dark-mode .btn-danger:hover {
+  background-color: #dc2626;
+  color: white;
+}
+
+h5 {
+  color: var(--text-primary);
+  transition: all 0.3s ease;
+}
+
+div.dark-mode h5 {
+  color: var(--text-primary);
+}
+
+div.dark-mode h5:hover {
+  color: #8b9ef6;
+}
+
+div.dark-mode .card-header {
+  background-color: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-color) !important;
+  color: var(--text-primary);
 }
 </style>

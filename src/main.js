@@ -10,6 +10,10 @@ import 'bootstrap'
 
 const app = createApp(App)
 
+// Restore auth state from localStorage before routing
+const { initializeAuth } = useStore()
+initializeAuth()
+
 // Provide data service to all components
 app.provide('dataService', DataService)
 

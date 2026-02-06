@@ -12,6 +12,7 @@ import cors from "cors";
 import employeeRoutes from "./routes/employeeRoutes.js";
 import attendanceRouter from "./routes/attendanceRouter.js";
 import leaveRoutes from "./routes/leaveRoute.js";
+import payrollRoutes from "./routes/payrollRoute.js";
 
 // Create Express app
 const app = express();
@@ -26,6 +27,7 @@ app.use(express.json());
 app.use("/api/employees", employeeRoutes);
 app.use("/api/attendance", attendanceRouter);
 app.use("/api/leave", leaveRoutes);
+app.use("/api/payroll", payrollRoutes);
 
 // Start the server (use PORT from env or fallback to 3000)
 const PORT = process.env.PORT || 3000;

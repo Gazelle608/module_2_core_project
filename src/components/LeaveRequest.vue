@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div :class="{ 'dark-mode': store.state.theme.isDark }">
     <!-- Header -->
     <div class="mb-4">
       <div class="d-flex align-items-center mb-2">
@@ -7,7 +7,7 @@
           <i class="bi bi-calendar-event text-warning fs-3"></i>
         </div>
         <div>
-          <h1 class="h2 mb-1 fw-bold" style="color: #2d3748;">Leave Request Management</h1>
+          <h1 class="h2 mb-1 fw-bold page-title">Leave Request Management</h1>
           <p class="text-muted mb-0">Digital system for time off requests and approvals</p>
         </div>
       </div>
@@ -310,8 +310,205 @@ export default {
 </script>
 
 <style scoped>
+:root {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8fafc;
+  --text-primary: #2d3748;
+  --text-secondary: #718096;
+  --border-color: #e2e8f0;
+}
+
+div.dark-mode {
+  --bg-primary: #1a1a2e;
+  --bg-secondary: #16213e;
+  --text-primary: #ecf0f1;
+  --text-secondary: #bdc3c7;
+  --border-color: #0f3460;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+.page-title {
+  color: var(--text-primary);
+  transition: color 0.3s ease;
+}
+
+.card {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  border-color: var(--border-color) !important;
+  transition: all 0.3s ease;
+}
+
+.card-header {
+  background-color: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-color) !important;
+  color: var(--text-primary);
+}
+
+.card-footer {
+  background-color: var(--bg-secondary);
+  border-top: 1px solid var(--border-color);
+  color: var(--text-primary);
+}
+
+.table {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+.table thead {
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+  border-color: var(--border-color);
+}
+
+div.dark-mode .table thead {
+  background-color: #0f3460;
+}
+
+.table thead th {
+  font-weight: 600;
+  color: var(--text-primary);
+  background-color: var(--bg-secondary);
+  border-color: var(--border-color);
+  padding: 1rem;
+  transition: all 0.3s ease;
+}
+
+div.dark-mode .table thead th {
+  background-color: #0f3460;
+  color: #ecf0f1;
+  border-color: #1a1a2e;
+}
+
+.table tbody {
+  background-color: var(--bg-primary);
+}
+
+.table tbody tr {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  border-bottom: 1px solid var(--border-color);
+  transition: background-color 0.2s ease;
+}
+
+.table tbody tr:nth-child(even) {
+  background-color: rgba(102, 126, 234, 0.02);
+}
+
+div.dark-mode .table tbody tr:nth-child(even) {
+  background-color: rgba(102, 126, 234, 0.08);
+}
+
+.table-hover tbody tr:hover {
+  background-color: rgba(102, 126, 234, 0.05);
+}
+
+div.dark-mode .table-hover tbody tr:hover {
+  background-color: rgba(102, 126, 234, 0.15);
+}
+
+.table td {
+  color: var(--text-primary);
+  border-color: var(--border-color);
+  background-color: var(--bg-primary);
+  padding: 0.875rem 1rem;
+  transition: all 0.3s ease;
+}
+
+.table tbody tr:hover td {
+  background-color: rgba(102, 126, 234, 0.05);
+}
+
+div.dark-mode .table tbody tr:hover td {
+  background-color: rgba(102, 126, 234, 0.1);
+}
+
+.text-muted {
+  color: var(--text-secondary) !important;
+}
+
+div.dark-mode .text-muted {
+  color: #95a5a6 !important;
+}
+
 .badge {
-  font-weight: 500;
-  padding: 0.35rem 0.75rem;
+  font-weight: 600;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+}
+
+.badge.bg-success {
+  background-color: #10b981 !important;
+  color: white;
+}
+
+.badge.bg-danger {
+  background-color: #ef4444 !important;
+  color: white;
+}
+
+.badge.bg-warning {
+  background-color: #f59e0b !important;
+  color: white;
+}
+
+.badge.bg-info {
+  background-color: #3b82f6 !important;
+  color: white;
+}
+
+a {
+  color: #667eea;
+  transition: color 0.3s ease;
+}
+
+div.dark-mode a {
+  color: #8b9ef6;
+}
+
+div.dark-mode a:hover {
+  color: #a5b9ff;
+}
+
+.btn-sm {
+  padding: 0.4rem 0.8rem;
+  font-size: 0.875rem;
+  border-radius: 6px;
+}
+
+.btn-success {
+  background-color: #10b981;
+  border: none;
+  color: white;
+}
+
+.btn-success:hover {
+  background-color: #059669;
+  color: white;
+}
+
+.btn-danger {
+  background-color: #ef4444;
+  border: none;
+  color: white;
+}
+
+.btn-danger:hover {
+  background-color: #dc2626;
+  color: white;
+}
+
+.form-control, .form-select {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  border-color: var(--border-color);
+}
+
+.form-control:focus, .form-select:focus {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  border-color: #667eea;
 }
 </style>

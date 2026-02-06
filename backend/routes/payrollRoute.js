@@ -5,7 +5,7 @@ import express from "express";
 import { calculatePayroll } from "../logic/payrollLogic.js";
 
 // Import MySQL pool for database interaction
-import { pool } from "../db.js";
+import { pool } from "../config/db.js";
 
 // Create a router instance
 const router = express.Router();

@@ -11,6 +11,9 @@ const state = reactive({
   leaveRequests: [],
   selectedEmployee: null,
   scheduledReviews: [],
+  theme: {
+    isDark: localStorage.getItem('appTheme') === 'dark'
+  },
   auth: {
     user: null,
     isAuthenticated: false,
@@ -43,6 +46,8 @@ export const useStore = () => {
       state.auth.user = { username: HARDCODED_USER.username, name: HARDCODED_USER.name };
       state.auth.isAuthenticated = true;
       state.auth.error = null;
+      // Persist to localStorage
+      localStorage.setItem('auth', JSON.stringify(state.auth));
       return true;
     }
     state.auth.error = 'Invalid credentials';
@@ -53,6 +58,22 @@ export const useStore = () => {
     state.auth.user = null;
     state.auth.isAuthenticated = false;
     state.auth.error = null;
+    // Clear from localStorage
+    localStorage.removeItem('auth');
+  };
+
+  const initializeAuth = () => {
+    // Restore auth state from localStorage on app startup
+    const savedAuth = localStorage.getItem('auth');
+    if (savedAuth) {
+      try {
+        const auth = JSON.parse(savedAuth);
+        state.auth = auth;
+      } catch (e) {
+        console.error('Failed to restore auth state', e);
+        localStorage.removeItem('auth');
+      }
+    }
   };
 
   // Update helpers
@@ -136,6 +157,11 @@ export const useStore = () => {
     state.scheduledReviews.push({ employeeId, date })
   }
 
+  const toggleTheme = () => {
+    state.theme.isDark = !state.theme.isDark
+    localStorage.setItem('appTheme', state.theme.isDark ? 'dark' : 'light')
+  };
+
   return {
     state: readonly(state), // Readonly to prevent direct mutations outside
     setSelectedEmployee,
@@ -151,6 +177,8 @@ export const useStore = () => {
     scheduleReview,
     login,
     logout,
+    initializeAuth,
+    toggleTheme,
     // Other actions...
   };
 };
