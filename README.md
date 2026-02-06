@@ -26,12 +26,7 @@ npm install
 - From Command Prompt or Git Bash:
 
 ```bash
-npm run dev<img width="1042" height="765" alt="Screenshot 2026-02-05 161935" src="https://github.com/user-attachments/assets/f6731705-58bc-4a30-a244-04f3ae21dd83" />
-<img width="1052" height="788" alt="Screenshot 2026-02-05 161948" src="https://github.com/user-attachments/assets/ec432a7c-740d-4d1c-8726-56439ac3ae1d" />
-<img width="1077" height="718" alt="Screenshot 2026-02-05 161831" src="https://github.com/user-attachments/assets/a7239758-9e99-4ac0-9aab-a425a676115a" />
-<img width="321" height="140" alt="Screenshot 2026-02-05 161849" src="https://github.com/user-attachments/assets/26b84e41-a32f-41d0-ba97-08762717500c" />
-<img width="1066" height="541" alt="Screenshot 2026-02-05 161901" src="https://github.com/user-attachments/assets/b9db1880-8385-4efb-9675-ed2ca241e6b5" />
-<img width="1069" height="868" alt="Screenshot 2026-02-05 161920" src="https://github.com/user-attachments/assets/36feee01-c294-43b5-a8e9-c974066c27a8" />
+npm run dev
 
 ```
 
@@ -126,3 +121,9 @@ export default defineConfig({
 <img width="1898" height="871" alt="Screenshot 2026-02-06 100225" src="https://github.com/user-attachments/assets/56fc8372-3592-4862-a2dc-6b921d635d0b" />
 <img width="1901" height="870" alt="Screenshot 2026-02-06 100240" src="https://github.com/user-attachments/assets/4d41901a-b136-48a2-be80-f82d4428107c" />
 <img width="1900" height="870" alt="Screenshot 2026-02-06 100155" src="https://github.com/user-attachments/assets/9ff5acac-3b33-49d4-8aa5-82cf45b4706c" />
+<img width="1042" height="765" alt="Screenshot 2026-02-05 161935" src="https://github.com/user-attachments/assets/f6731705-58bc-4a30-a244-04f3ae21dd83" />
+<img width="1052" height="788" alt="Screenshot 2026-02-05 161948" src="https://github.com/user-attachments/assets/ec432a7c-740d-4d1c-8726-56439ac3ae1d" />
+<img width="1077" height="718" alt="Screenshot 2026-02-05 161831" src="https://github.com/user-attachments/assets/a7239758-9e99-4ac0-9aab-a425a676115a" />
+<img width="321" height="140" alt="Screenshot 2026-02-05 161849" src="https://github.com/user-attachments/assets/26b84e41-a32f-41d0-ba97-08762717500c" />
+<img width="1066" height="541" alt="Screenshot 2026-02-05 161901" src="https://github.com/user-attachments/assets/b9db1880-8385-4efb-9675-ed2ca241e6b5" />
+<img width="1069" height="868" alt="Screenshot 2026-02-05 161920" src="https://github.com/user-attachments/assets/36feee01-c294-43b5-a8e9-c974066c27a8" />
