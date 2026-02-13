@@ -64,7 +64,13 @@ Preview the production build
 ```bash
 npm run preview
 ```
+---
+## 💻 Login Details
 
+- **Login:**
+  - admin
+- **Password:**
+  -admin123
 ---
 
 ## 📝 Important notes & fixes applied
