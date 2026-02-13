@@ -3,6 +3,10 @@
 A simple HR dashboard built with **Vue 3** and **Vite** for the Module 1 Core Project. It includes employee management, attendance, payroll and leave request views, and uses a small local JSON-based data service for demo purposes.
 
 ---
+# Important
+
+Added .env file
+---
 
 ## 🔧 Requirements
 
